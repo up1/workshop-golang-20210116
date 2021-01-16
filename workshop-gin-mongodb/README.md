@@ -11,6 +11,9 @@ $docker-compose ps
 $sh run.sh
 ```
 
+### Keep metric with [Prometheus](https://github.com/penglongli/gin-metrics)
+
+Access to http://localhost:8080/metrics
 
 ### Generate API document
 ```
