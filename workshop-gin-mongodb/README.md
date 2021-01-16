@@ -15,7 +15,7 @@ $sh run.sh
 
 Access to http://localhost:8080/metrics
 
-### Generate API document
+### Generate API document with [Swagger](https://github.com/swaggo/gin-swagger)
 ```
 $go get -u github.com/swaggo/swag/cmd/swag
 $swag init --dir cmd/ --parseDependency --output docs
