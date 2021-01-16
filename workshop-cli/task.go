@@ -20,31 +20,43 @@ type UserService struct {
 // AddNew : Add new user to file
 func (us UserService) AddNew(name string, age int) {
 	u1 := User{Name: name, Age: age}
-	// Read file
+	// Read data from file
 	allUsers := us.Store.Read()
 	if len(allUsers) == 0 {
 		allUsers = []byte("[]")
 	}
-	var out Users
-	err := json.Unmarshal(allUsers, &out)
-	if err != nil {
-		fmt.Println("Error> ", err)
-		return
-	}
+	// JSON message to Struct
+	out := jsontoStruct(allUsers)
+	// Add new user
 	out = append(out, u1)
+	// Struct to JSON message
 	content, _ := json.Marshal(out)
+	// Save data to file
 	us.Store.Write(content)
 }
 
 // ListAll : List all users from file
 func (us UserService) ListAll() string {
+	// Read data from file
 	allUsers := us.Store.Read()
+	// JSON message to Struct
+	users := jsontoStruct(allUsers)
+	// Formatting output
+	return formatting(users)
+}
+
+func jsontoStruct(content []byte) Users {
 	var out Users
-	err := json.Unmarshal(allUsers, &out)
+	err := json.Unmarshal(content, &out)
 	if err != nil {
-		fmt.Println("Error ", err)
+		fmt.Println("Error> ", err)
+		return nil
 	}
-	b, err := json.MarshalIndent(out, "", "    ")
+	return out
+}
+
+func formatting(users Users) string {
+	b, err := json.MarshalIndent(users, "", "    ")
 	if err != nil {
 		fmt.Println("Error ", err)
 		return ""
