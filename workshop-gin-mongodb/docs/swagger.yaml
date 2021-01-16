@@ -1,0 +1,38 @@
+definitions:
+  user.User:
+    properties:
+      age:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/users:
+    get:
+      description: Get Users
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: Age
+        in: query
+        name: age
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/user.User'
+              type: array
+            type: array
+      summary: Retrieves users based on query
+swagger: "2.0"
