@@ -5,3 +5,4 @@
   * [Echo](https://echo.labstack.com/)
   * [Gin](https://github.com/gin-gonic/gin)
   * [Fiber](https://github.com/gofiber/fiber)
+* Workshop with Gin
