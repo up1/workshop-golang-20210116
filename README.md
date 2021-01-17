@@ -14,3 +14,4 @@
 * [Mongo Docker Image](https://hub.docker.com/_/mongo)
 * Logging with [Logrus](https://github.com/sirupsen/logrus)
 * Testing with [Testify](https://github.com/stretchr/testify)
+* [Visualizing Concurrency in Go](https://divan.dev/posts/go_concurrency_visualize/)
