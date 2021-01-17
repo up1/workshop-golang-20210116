@@ -1,4 +1,11 @@
-# Workshop
+# Workshop with REST API
+* Gin
+    * Router
+    * Middleware
+* MongoDB
+* Swagger to generate the API documentation
+* Dependency injection
+* Prometheus
 
 ### Start MongoDB
 ```
