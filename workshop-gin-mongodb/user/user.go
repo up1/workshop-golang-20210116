@@ -2,6 +2,7 @@ package user
 
 import (
 	"demo/db"
+	"demo/middlewares"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,8 +12,7 @@ import (
 func NewUserAPI(app *gin.RouterGroup, resource *db.Resource) {
 	// Create repository
 	repository := NewUserRepository(resource)
-
-	app.GET("/users", handleGetUsers(repository))
+	app.GET("/users", middlewares.AuthRequired(), handleGetUsers(repository))
 	app.GET("/users/:id", handleGetUserByID(repository))
 	app.POST("/users", handleCreateNewTask(repository))
 }

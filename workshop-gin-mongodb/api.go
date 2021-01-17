@@ -2,6 +2,7 @@ package demo
 
 import (
 	"demo/db"
+	"demo/middlewares"
 	"demo/user"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,7 @@ func StartServer() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	// router.Use(middlewares.AuthRequired())
-	// router.NoRoute(middlewares.NoRouteHandler())
+	router.NoRoute(middlewares.NoRouteHandler())
 	// router.NoMethod(middlewares.NoMethodHandler())
 
 	// ===== Prometheus
