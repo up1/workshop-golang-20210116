@@ -34,7 +34,10 @@ func CreateResource() (*Resource, error) {
 	clusterEndpoint := os.Getenv("MONGODB_ENDPOINT")
 
 	connectionURI := fmt.Sprintf(connectionStringTemplate, username, password, clusterEndpoint)
-	client, err := mongo.NewClient(options.Client().ApplyURI(connectionURI))
+	client, err := mongo.NewClient(
+		options.Client().ApplyURI(connectionURI),
+		options.Client().SetMinPoolSize(100),
+		options.Client().SetMaxPoolSize(1000))
 	if err != nil {
 		logrus.Errorf("Failed to create client: %v", err)
 		return nil, err

@@ -30,7 +30,7 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Retrieves users based on query",
+                "summary": "Retrieves users from mongodb",
                 "parameters": [
                     {
                         "type": "string",

@@ -34,5 +34,5 @@ paths:
                 $ref: '#/definitions/user.User'
               type: array
             type: array
-      summary: Retrieves users based on query
+      summary: Retrieves users from mongodb
 swagger: "2.0"

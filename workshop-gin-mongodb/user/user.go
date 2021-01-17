@@ -2,7 +2,6 @@ package user
 
 import (
 	"demo/db"
-	"demo/middlewares"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +11,7 @@ import (
 func NewUserAPI(app *gin.RouterGroup, resource *db.Resource) {
 	// Create repository
 	repository := NewUserRepository(resource)
-	app.GET("/users", middlewares.AuthRequired(), handleGetUsers(repository))
+	app.GET("/users", handleGetUsers(repository))
 	app.GET("/users/:id", handleGetUserByID(repository))
 	app.POST("/users", handleCreateNewTask(repository))
 }
@@ -24,8 +23,8 @@ type UserRequest struct {
 
 // Handlers
 
-// GetUsers godoc
-// @Summary Retrieves users based on query
+// GetUsers  xxxx
+// @Summary Retrieves users from mongodb
 // @Description Get Users
 // @Produce json
 // @Param name query string false "Name"
