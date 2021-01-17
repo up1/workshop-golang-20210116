@@ -35,7 +35,7 @@ func hello(c *gin.Context) {
 }
 
 func main() {
-	r := gin.Default()
+	r := gin.New()
 	r.GET("/", hello)
 	r.GET("/users", getUsers)
 	r.Run(":8080")
