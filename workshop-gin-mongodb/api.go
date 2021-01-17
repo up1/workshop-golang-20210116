@@ -16,10 +16,11 @@ import (
 // StartServer : Create new Router with Gin
 func StartServer() {
 	// gin.DisableConsoleColor()
-	router := gin.Default()
+	// router := gin.Default()
+	router := gin.New()
 
 	// ===== Middlewares
-	router.Use(gin.Logger())
+	// router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	// router.Use(middlewares.AuthRequired())
 	router.NoRoute(middlewares.NoRouteHandler())
