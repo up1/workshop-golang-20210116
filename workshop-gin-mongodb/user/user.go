@@ -2,17 +2,17 @@ package user
 
 import (
 	"demo/db"
-	"demo/middlewares"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
 // NewUserAPI to create the router of user
-func NewUserAPI(app *gin.RouterGroup, resource *db.Resource) {
+func NewUserAPI(app *echo.Group, resource *db.Resource) {
 	// Create repository
 	repository := NewUserRepository(resource)
-	app.GET("/users", middlewares.AuthRequired(), handleGetUsers(repository))
+	app.GET("/users", handleGetUsers(repository))
 	app.GET("/users/:id", handleGetUserByID(repository))
 	app.POST("/users", handleCreateNewTask(repository))
 }
@@ -32,8 +32,8 @@ type UserRequest struct {
 // @Param age query int false "Age"
 // @Success 200 {array} Users
 // @Router /api/v1/users [get]
-func handleGetUsers(repository Repository) func(c *gin.Context) {
-	return func(c *gin.Context) {
+func handleGetUsers(repository Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
 		code := http.StatusOK
 		users, err := repository.GetAll()
 		if err != nil {
@@ -42,12 +42,12 @@ func handleGetUsers(repository Repository) func(c *gin.Context) {
 		if len(users) == 0 {
 			code = http.StatusNotFound
 		}
-		c.JSON(code, users)
+		return c.JSON(code, users)
 	}
 }
 
-func handleGetUserByID(repository Repository) func(c *gin.Context) {
-	return func(c *gin.Context) {
+func handleGetUserByID(repository Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
 		code := http.StatusOK
 		id := c.Param("id")
 		user, err := repository.GetByID(id)
@@ -55,17 +55,16 @@ func handleGetUserByID(repository Repository) func(c *gin.Context) {
 			"user": user,
 			"err":  getErrorMessage(err),
 		}
-		c.JSON(code, response)
+		return c.JSON(code, response)
 	}
 }
 
-func handleCreateNewTask(repository Repository) func(c *gin.Context) {
-	return func(c *gin.Context) {
+func handleCreateNewTask(repository Repository) func(c echo.Context) error {
+	return func(c echo.Context) error {
 		code := http.StatusOK
 		newUser := UserRequest{}
 		if err := c.Bind(&newUser); err != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+			return c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		}
 		// Validate input !!!
 
@@ -75,7 +74,7 @@ func handleCreateNewTask(repository Repository) func(c *gin.Context) {
 			"user": user,
 			"err":  getErrorMessage(err),
 		}
-		c.JSON(code, response)
+		return c.JSON(code, response)
 	}
 }
 
